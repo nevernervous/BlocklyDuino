@@ -34,9 +34,11 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -94,6 +96,13 @@ public class Browser extends Region {
 	static Button save1 = new Button(LanguageProvider.getLocalString("save"));
 	static Button save2 = new Button(LanguageProvider.getLocalString("save_as"));
 	static Button load = new Button(LanguageProvider.getLocalString("open"));
+	
+	final ToggleGroup group = new ToggleGroup();
+	
+	static RadioButton arduinoButton = new RadioButton("Arduino");
+	static RadioButton scratchButton = new RadioButton("Scratch");
+	
+		
 	static Button openSerialPort = new Button(LanguageProvider.getLocalString("port_monitor"));
 	static final Slider slider = new Slider();
 	static Button compile = new Button(LanguageProvider.getLocalString("compile"));
@@ -104,7 +113,12 @@ public class Browser extends Region {
 	static final ProgressIndicator progress2 = new ProgressIndicator();
 	static final TextArea output_text = new TextArea();
 	static final WebView browser = new WebView();
+	static final WebView scratchBrowser = new WebView();
 	static final WebEngine webEngine = browser.getEngine();
+	static final WebEngine scratchWebEngine = scratchBrowser.getEngine();
+	
+	private static Boolean bBrowser = false;
+	
 	private static int sumCmd = 1;
 
 	private static String webPath;
@@ -160,8 +174,29 @@ public class Browser extends Region {
 		
 		browser.setContextMenuEnabled(false);
 		webEngine.load(webPath);
+		File directory = new File("");
+//		String scratchPath = "file:///" + directory.getAbsolutePath() + "/scratch-gui/index.html";
+		String scratchPath = "file:///" + directory.getAbsolutePath() + "/scratch-gui/1.html";
+			
+		scratchWebEngine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
+			public void changed(ObservableValue<? extends Worker.State> ov, Worker.State oldState,
+					Worker.State newState) {
+				if (newState == Worker.State.SUCCEEDED) {
+					try {
+						System.out.println("onchanged");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+		});
+		
+		scratchWebEngine.load(scratchPath);
+		browser.setVisible(!bBrowser);
+		scratchBrowser.setVisible(bBrowser);
 		below.getChildren().addAll(new Node[] { toolBar, output_text });
-		sp1.getChildren().addAll(new Node[] { browser });
+		sp1.getChildren().addAll(new Node[] { browser, scratchBrowser});
 		sp2.getChildren().addAll(new Node[] { below });
 		sp.setOrientation(Orientation.VERTICAL);
 		sp.getItems().addAll(new Node[] { sp1, sp2 });
@@ -390,6 +425,17 @@ public class Browser extends Region {
 		toolBar.getChildren().add(save1);
 		toolBar.getChildren().add(createSpacer(1));
 		toolBar.getChildren().add(save2);
+		toolBar.getChildren().add(createSpacer3(70));
+		toolBar.getChildren().add(createSpacer(1));
+		
+		arduinoButton.setToggleGroup(group);
+		arduinoButton.setSelected(true);
+		scratchButton.setToggleGroup(group);
+		toolBar.getChildren().add(arduinoButton);
+		toolBar.getChildren().add(createSpacer3(10));
+		toolBar.getChildren().add(createSpacer(1));
+		toolBar.getChildren().add(scratchButton);
+		toolBar.getChildren().add(createSpacer3(5));
 		toolBar.getChildren().add(createSpacer(1));
 
 		slider.setMin(50);
