@@ -38,6 +38,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
@@ -97,7 +98,7 @@ public class Browser extends Region {
 	static Button save2 = new Button(LanguageProvider.getLocalString("save_as"));
 	static Button load = new Button(LanguageProvider.getLocalString("open"));
 	
-	final ToggleGroup group = new ToggleGroup();
+	final ToggleGroup radioButtonGroup = new ToggleGroup();
 	
 	static RadioButton arduinoButton = new RadioButton("Arduino");
 	static RadioButton scratchButton = new RadioButton("Scratch");
@@ -428,9 +429,20 @@ public class Browser extends Region {
 		toolBar.getChildren().add(createSpacer3(70));
 		toolBar.getChildren().add(createSpacer(1));
 		
-		arduinoButton.setToggleGroup(group);
+		arduinoButton.setToggleGroup(radioButtonGroup);
 		arduinoButton.setSelected(true);
-		scratchButton.setToggleGroup(group);
+		scratchButton.setToggleGroup(radioButtonGroup);
+		
+		radioButtonGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+		    public void changed(ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) {
+		            if (radioButtonGroup.getSelectedToggle() != null) {
+		                bBrowser = !bBrowser;
+		                browser.setVisible(!bBrowser);
+		        		scratchBrowser.setVisible(bBrowser);
+		            }                
+		        }
+		});
+		
 		toolBar.getChildren().add(arduinoButton);
 		toolBar.getChildren().add(createSpacer3(10));
 		toolBar.getChildren().add(createSpacer(1));
