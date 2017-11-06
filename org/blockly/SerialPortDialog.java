@@ -83,8 +83,8 @@ public class SerialPortDialog extends JDialog {
 				isSetNum = false;
 				card.first(getContentPane());
 
-				Browser.setUploadDisable(Boolean.valueOf(false));
-				Browser.setHardWareTestDisable(Boolean.valueOf(false));
+				MyBrowser.setUploadDisable(Boolean.valueOf(false));
+				MyBrowser.setHardWareTestDisable(Boolean.valueOf(false));
 
 				if ((serialPortCom != null) && (serialPortCom.isOpened())) {
 					try {

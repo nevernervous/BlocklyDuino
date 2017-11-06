@@ -222,7 +222,7 @@ public class LibManagerDialog extends JDialog {
 				}
 
 				if ((str_hardware != null) && (!str_hardware.equals("")) && (str_hardware.startsWith("hardware"))) {
-					MyMethod.deleteDirectory(Browser.arduinoPath + str_hardware);
+					MyMethod.deleteDirectory(MyBrowser.arduinoPath + str_hardware);
 				}
 
 				if ((str_media != null) && (!str_media.equals("")) && (str_media.startsWith("media"))) {
@@ -302,7 +302,7 @@ public class LibManagerDialog extends JDialog {
 		updataDialog();
 
 		MyMethod.setCustom();
-		Browser.refreshWeb();
+		MyBrowser.refreshWeb();
 	}
 
 	private void updataDialog() {

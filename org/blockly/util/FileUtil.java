@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 
-import org.blockly.Browser;
+import org.blockly.MyBrowser;
 
 public class FileUtil {
 	public static boolean copyFileTo(String file, String to) {
@@ -73,12 +73,12 @@ public class FileUtil {
 	}
 
 	public static void searchAndExport(String lib, String path) {
-		File searchPath = new File(Browser.arduinoPath + "libraries");
+		File searchPath = new File(MyBrowser.arduinoPath + "libraries");
 		if (searchAndExportDetail(lib, searchPath, path)) {
 			return;
 		}
 
-		searchPath = new File(Browser.arduinoPath + "hardware/arduino/avr/libraries");
+		searchPath = new File(MyBrowser.arduinoPath + "hardware/arduino/avr/libraries");
 		searchAndExportDetail(lib, searchPath, path);
 	}
 

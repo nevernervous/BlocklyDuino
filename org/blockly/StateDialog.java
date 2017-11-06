@@ -36,7 +36,7 @@ public class StateDialog {
 		stage.setResizable(false);
 		stage.setOnCloseRequest(new EventHandler() {
 			public void handle(Event event) {
-				Browser.cmdIsKilled = true;
+				MyBrowser.cmdIsKilled = true;
 			}
 		});
 		Group root = new Group();
@@ -44,7 +44,7 @@ public class StateDialog {
 
 		btn_cancel.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				Browser.cmdIsKilled = true;
+				MyBrowser.cmdIsKilled = true;
 				stage.hide();
 			}
 

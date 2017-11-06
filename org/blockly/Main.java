@@ -16,7 +16,7 @@ import jssc.SerialPort;
 
 public class Main extends Application {
 	private Scene scene;
-	private Browser browser;
+	private MyBrowser browser;
 	private boolean stageIconified;
 
 	public static void main(String[] args) {
@@ -27,9 +27,9 @@ public class Main extends Application {
 		MyMethod.createSomeFolder();
 		MyMethod.setCustom();
 		MyMethod.setCompanyLanguage();
-		stage.setTitle(Browser.getMyTitle());
+		stage.setTitle(MyBrowser.getMyTitle());
 		StackPane root = new StackPane();
-		browser = new Browser(stage);
+		browser = new MyBrowser(stage);
 		root.getChildren().add(browser);
 		scene = new Scene(root, 1150.0D, 650.0D);
 		stage.setMaximized(true);
@@ -50,22 +50,22 @@ public class Main extends Application {
 		stage.show();
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			public void handle(WindowEvent event) {
-				if (!Browser.isXmlSaved()) {
+				if (!MyBrowser.isXmlSaved()) {
 					event.consume();
-					Browser.unSaveWarningDialog.setYesOrNo(false);
-					Browser.unSaveWarningDialog.setLocationRelativeTo(null);
-					Browser.unSaveWarningDialog.setVisible(true);
-					Browser.unSaveWarningDialog.toFront();
+					MyBrowser.unSaveWarningDialog.setYesOrNo(false);
+					MyBrowser.unSaveWarningDialog.setLocationRelativeTo(null);
+					MyBrowser.unSaveWarningDialog.setVisible(true);
+					MyBrowser.unSaveWarningDialog.toFront();
 					new Thread() {
 						public void run() {
-							while (Browser.unSaveWarningDialog.isVisible()) {
+							while (MyBrowser.unSaveWarningDialog.isVisible()) {
 								try {
 									Thread.sleep(100L);
 								} catch (InterruptedException e) {
 									e.printStackTrace();
 								}
 							}
-							if (Browser.unSaveWarningDialog.isYesOrNo()) {
+							if (MyBrowser.unSaveWarningDialog.isYesOrNo()) {
 								Platform.exit();
 							}
 						}
@@ -87,15 +87,15 @@ public class Main extends Application {
 			System.exit(0);
 		} else {
 			try {
-				Browser.portDialog.dispose();
+				MyBrowser.portDialog.dispose();
 			} catch (Exception localException) {
 			}
 			try {
-				Browser.libmanagerDialog.dispose();
+				MyBrowser.libmanagerDialog.dispose();
 			} catch (Exception localException1) {
 			}
 			try {
-				Browser.unSaveWarningDialog.dispose();
+				MyBrowser.unSaveWarningDialog.dispose();
 			} catch (Exception localException2) {
 			}
 		}

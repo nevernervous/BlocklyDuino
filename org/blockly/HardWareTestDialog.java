@@ -96,7 +96,7 @@ public class HardWareTestDialog {
 
 				timer.stop();
 
-				Browser.cmdIsKilled = true;
+				MyBrowser.cmdIsKilled = true;
 
 				strBuffer = new StringBuffer("");
 
